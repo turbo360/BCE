@@ -1,14 +1,18 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ResponseEditor({
   caseStudyId,
   initialContent,
+  nextQuestionHref,
 }: {
   caseStudyId: number;
   initialContent: string;
+  nextQuestionHref?: string;
 }) {
+  const router = useRouter();
   const [content, setContent] = useState(initialContent);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [showSaveModal, setShowSaveModal] = useState(false);
@@ -85,13 +89,27 @@ export default function ResponseEditor({
         placeholder="Type your response here..."
         className="w-full min-h-[300px] p-4 border border-gray-200 rounded-lg text-sm text-bce-slate leading-relaxed focus:ring-2 focus:ring-bce-light-blue focus:border-transparent outline-none resize-y"
       />
-      <div className="flex justify-end mt-3">
+      <div className="flex justify-end gap-3 mt-3">
         <button
           onClick={() => save(content, true)}
           className="bg-bce-navy text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-bce-navy-dark transition-colors"
         >
           Save Response
         </button>
+        {nextQuestionHref && (
+          <button
+            onClick={async () => {
+              await save(content);
+              router.push(nextQuestionHref);
+            }}
+            className="bg-bce-light-blue text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-bce-navy transition-colors flex items-center gap-2"
+          >
+            Next Question
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Save confirmation modal */}

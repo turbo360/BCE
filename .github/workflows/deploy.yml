@@ -14,9 +14,19 @@ jobs:
           host: 208.87.135.158
           username: root
           password: ${{ secrets.SSH_PASSWORD }}
+          envs: POSTMARK_API_TOKEN
           script: |
             cd /var/www/bce.turbo.net.au
             git pull origin main
             npm install
+
+            # Write .env.local with secrets (never committed to git)
+            cat > .env.local << EOF
+            SECRET_KEY=bce-case-studies-2026-compliance-program-production-secret
+            POSTMARK_API_TOKEN=${POSTMARK_API_TOKEN}
+            EOF
+
             npm run build
             pm2 restart bce-casestudies || pm2 start ecosystem.config.js
+        env:
+          POSTMARK_API_TOKEN: ${{ secrets.POSTMARK_API_TOKEN }}

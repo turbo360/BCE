@@ -48,6 +48,13 @@ export function getDb(): Database.Database {
       updated_at TEXT DEFAULT (datetime('now')),
       UNIQUE(user_id, case_study_id)
     );
+
+    CREATE TABLE IF NOT EXISTS notification_recipients (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT UNIQUE NOT NULL COLLATE NOCASE,
+      name TEXT NOT NULL DEFAULT '',
+      created_at TEXT DEFAULT (datetime('now'))
+    );
   `);
 
   // Seed modules if empty

@@ -25,6 +25,18 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
   const prevCase = currentIndex > 0 ? allCases[currentIndex - 1] : null;
   const nextCase = currentIndex < allCases.length - 1 ? allCases[currentIndex + 1] : null;
 
+  // If scenario references Question 1, fetch the full scenario from the first case in this module
+  const isReferenceScenario = caseStudy.scenario.toLowerCase().includes("refer to the scenario");
+  let displayScenario = caseStudy.scenario;
+  if (isReferenceScenario) {
+    const firstCase = db.prepare("SELECT scenario FROM case_studies WHERE module_id = ? ORDER BY sort_order LIMIT 1").get(caseStudy.module_id) as { scenario: string } | undefined;
+    if (firstCase) displayScenario = firstCase.scenario;
+  }
+
+  // Find next question in same module for "Next Question" button
+  const currentModuleIndex = moduleCases.findIndex((mc) => mc.id === caseStudy.id);
+  const nextModuleCase = currentModuleIndex < moduleCases.length - 1 ? moduleCases[currentModuleIndex + 1] : null;
+
   const isSubmitted = !!user.submitted_at;
 
   return (
@@ -68,8 +80,8 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
             <div className="p-6">
               <h3 className="text-xs font-bold text-bce-navy uppercase tracking-wider mb-4">Scenario</h3>
               <div
-                className="text-[15px] text-bce-slate leading-relaxed scenario-content"
-                dangerouslySetInnerHTML={{ __html: caseStudy.scenario }}
+                className="text-base text-bce-slate leading-relaxed scenario-content"
+                dangerouslySetInnerHTML={{ __html: displayScenario }}
               />
             </div>
           </div>
@@ -106,6 +118,7 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
                 <ResponseEditor
                   caseStudyId={caseStudy.id}
                   initialContent={existingResponse?.content || ""}
+                  nextQuestionHref={nextModuleCase ? `/case-study/${nextModuleCase.id}` : undefined}
                 />
               )}
             </div>

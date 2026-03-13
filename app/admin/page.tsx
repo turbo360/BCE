@@ -1,6 +1,7 @@
 import { isAdmin } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import AdminPinGate from "@/components/AdminPinGate";
+import RecipientManager from "@/components/RecipientManager";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -136,6 +137,11 @@ export default async function AdminPage() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Notification Recipients */}
+        <div className="mt-8">
+          <RecipientManager />
         </div>
       </div>
     </div>
