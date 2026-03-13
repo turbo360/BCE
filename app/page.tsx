@@ -9,7 +9,7 @@ export default async function Home() {
   return (
     <div className="bg-bce-cream min-h-[calc(100vh-4rem)]">
       {/* Hero */}
-      <div className="relative text-white py-16 sm:py-24 overflow-hidden">
+      <div className="relative text-white py-24 sm:py-36 overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/hero.jpg')" }}></div>
         <div className="absolute inset-0 bg-bce-navy-dark/80"></div>
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 text-center">
