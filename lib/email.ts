@@ -37,7 +37,7 @@ export async function sendSubmissionEmail({
     return false;
   }
 
-  const submittedDate = new Date(submittedAt).toLocaleDateString("en-AU", {
+  const submittedDate = new Date(submittedAt + "Z").toLocaleDateString("en-AU", {
     day: "numeric",
     month: "long",
     year: "numeric",

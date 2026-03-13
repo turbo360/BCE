@@ -116,7 +116,7 @@ export default async function AdminPage() {
                       )}
                     </td>
                     <td className="px-6 py-4 text-xs text-bce-slate">
-                      {new Date(u.created_at).toLocaleDateString("en-AU", { timeZone: "Australia/Brisbane" })}
+                      {new Date(u.created_at + "Z").toLocaleDateString("en-AU", { timeZone: "Australia/Brisbane" })}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">

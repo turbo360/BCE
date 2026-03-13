@@ -101,7 +101,7 @@ export function generateSubmissionPdf(
     // Card accent top line
     doc.rect(LEFT + 60, cardY, pageWidth - 120, 3).fill(BCE_NAVY);
 
-    const submittedDate = new Date(user.submitted_at).toLocaleDateString("en-AU", {
+    const submittedDate = new Date(user.submitted_at + "Z").toLocaleDateString("en-AU", {
       day: "numeric",
       month: "long",
       year: "numeric",

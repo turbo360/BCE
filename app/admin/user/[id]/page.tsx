@@ -45,14 +45,14 @@ export default async function AdminUserPage({ params }: { params: { id: string }
             <div>
               <div className="text-xs text-bce-slate uppercase tracking-wider mb-1">Registered</div>
               <div className="text-sm font-medium text-bce-navy">
-                {new Date(user.created_at).toLocaleDateString("en-AU", { timeZone: "Australia/Brisbane" })}
+                {new Date(user.created_at + "Z").toLocaleDateString("en-AU", { timeZone: "Australia/Brisbane" })}
               </div>
             </div>
             <div>
               <div className="text-xs text-bce-slate uppercase tracking-wider mb-1">Status</div>
               {user.submitted_at ? (
                 <span className="inline-flex items-center gap-1 bg-green-100 text-green-800 px-2.5 py-1 rounded-full text-xs font-semibold">
-                  Submitted {new Date(user.submitted_at).toLocaleDateString("en-AU", { timeZone: "Australia/Brisbane" })}
+                  Submitted {new Date(user.submitted_at + "Z").toLocaleDateString("en-AU", { timeZone: "Australia/Brisbane" })}
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full text-xs font-semibold">
@@ -99,7 +99,7 @@ export default async function AdminUserPage({ params }: { params: { id: string }
                         )}
                         {response?.updated_at && (
                           <p className="text-xs text-gray-400 mt-2">
-                            Last updated: {new Date(response.updated_at).toLocaleString("en-AU", { timeZone: "Australia/Brisbane" })}
+                            Last updated: {new Date(response.updated_at + "Z").toLocaleString("en-AU", { timeZone: "Australia/Brisbane" })}
                           </p>
                         )}
                       </div>
