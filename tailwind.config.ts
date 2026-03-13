@@ -9,8 +9,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        bce: {
+          purple: "#8857a4",
+          rose: "#ffb4e5",
+          red: "#ef404a",
+          gold: "#ffcb05",
+          orange: "#fd770b",
+          green: "#00ae4d",
+          "light-blue": "#4fc6e0",
+          navy: "#054166",
+          "navy-dark": "#02273C",
+          cream: "#F7F5F2",
+          slate: "#4A5568",
+        },
+      },
+      fontFamily: {
+        sans: ["Raleway", "system-ui", "sans-serif"],
       },
     },
   },
