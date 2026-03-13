@@ -16,7 +16,7 @@ export default async function Home() {
           <p className="text-bce-light-blue text-lg font-semibold mb-1">
             BCE Professional Practices: Compliance Program
           </p>
-          <p className="text-gray-400 text-sm">Modules 2 &ndash; 6</p>
+          <p className="text-gray-400 text-sm">Modules 2 &ndash; 6 <span className="italic">(there are no case studies for Module 1)</span></p>
         </div>
       </div>
 
