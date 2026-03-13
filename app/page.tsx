@@ -9,8 +9,10 @@ export default async function Home() {
   return (
     <div className="bg-bce-cream min-h-[calc(100vh-4rem)]">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-bce-navy-dark to-bce-navy text-white py-10 sm:py-14">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+      <div className="relative text-white py-10 sm:py-14 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/hero.jpg')" }}></div>
+        <div className="absolute inset-0 bg-bce-navy-dark/80"></div>
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <h1 className="text-3xl sm:text-4xl font-bold mb-2">2026 Case Studies Portal</h1>
           <div className="w-24 h-1 bg-bce-gold mx-auto mb-4"></div>
           <p className="text-bce-light-blue text-lg font-semibold mb-1">
@@ -31,9 +33,6 @@ export default async function Home() {
                 <p>
                   Participants in the BCE Professional Practices: Compliance Program are asked to review the following
                   case studies with their syndicate group members prior to the 2 day face to face component of the program.
-                </p>
-                <p className="text-sm italic text-gray-500">
-                  Please note, there are no case studies provided for module 1.
                 </p>
                 <p>
                   During the 2 day program participants, in syndicates and on an individual basis, will be provided with
