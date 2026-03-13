@@ -11,6 +11,7 @@ const openSans = Open_Sans({ subsets: ["latin"], weight: ["300", "400", "500", "
 export const metadata: Metadata = {
   title: "BCE Case Studies Portal | Professional Practices Compliance Program",
   description: "Brisbane Catholic Education - Professional Practices: Compliance Program Case Studies",
+  robots: { index: false, follow: false },
 };
 
 export default async function RootLayout({
