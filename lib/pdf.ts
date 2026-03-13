@@ -107,6 +107,7 @@ export function generateSubmissionPdf(
       year: "numeric",
       hour: "2-digit",
       minute: "2-digit",
+      timeZone: "Australia/Brisbane",
     });
 
     const infoX = LEFT + 60 + cardPadding;
