@@ -2,6 +2,7 @@ import { isAdmin } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import AdminPinGate from "@/components/AdminPinGate";
 import RecipientManager from "@/components/RecipientManager";
+import AdminUserActions from "@/components/AdminUserActions";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -118,12 +119,15 @@ export default async function AdminPage() {
                       {new Date(u.created_at).toLocaleDateString("en-AU")}
                     </td>
                     <td className="px-6 py-4">
-                      <Link
-                        href={`/admin/user/${u.id}`}
-                        className="text-sm text-bce-light-blue hover:text-bce-navy font-medium"
-                      >
-                        View
-                      </Link>
+                      <div className="flex items-center gap-3">
+                        <Link
+                          href={`/admin/user/${u.id}`}
+                          className="text-sm text-bce-light-blue hover:text-bce-navy font-medium"
+                        >
+                          View
+                        </Link>
+                        {u.submitted_at && <AdminUserActions userId={u.id} />}
+                      </div>
                     </td>
                   </tr>
                 ))}
