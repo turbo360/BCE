@@ -54,6 +54,14 @@ export default async function Home() {
           {/* Auth Forms - takes 2 columns */}
           <div className="lg:col-span-2">
             <AuthForms />
+            <div className="flex items-center justify-center gap-6 mt-6">
+              <a href="https://www.thebrowncollective.com.au/" target="_blank" rel="noopener noreferrer">
+                <img src="/tbc-logo.png" alt="The Brown Collective" className="h-12 opacity-60 hover:opacity-100 transition-opacity" />
+              </a>
+              <a href="https://turbo.net.au" target="_blank" rel="noopener noreferrer">
+                <img src="/turbo-logo.png" alt="Turbo 360" className="h-8 opacity-60 hover:opacity-100 transition-opacity" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
