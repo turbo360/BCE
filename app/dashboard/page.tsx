@@ -2,7 +2,6 @@ import { getSessionUser } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import LogoutButton from "@/components/LogoutButton";
 import SubmitButton from "@/components/SubmitButton";
 import type { Module, CaseStudy, Response } from "@/lib/types";
 
@@ -36,15 +35,12 @@ export default async function Dashboard() {
               {user.first_name} {user.last_name} &middot; {user.cohort}
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            {user.submitted_at && (
-              <span className="inline-flex items-center gap-1.5 bg-green-100 text-green-800 px-3 py-1.5 rounded-full text-xs font-semibold">
-                <span className="w-2 h-2 bg-bce-green rounded-full"></span>
-                Submitted
-              </span>
-            )}
-            <LogoutButton />
-          </div>
+          {user.submitted_at && (
+            <span className="inline-flex items-center gap-1.5 bg-green-100 text-green-800 px-3 py-1.5 rounded-full text-xs font-semibold">
+              <span className="w-2 h-2 bg-bce-green rounded-full"></span>
+              Submitted
+            </span>
+          )}
         </div>
 
         {/* Progress bar */}

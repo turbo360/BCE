@@ -106,10 +106,10 @@ export const caseStudies = [
     sort_order: 5,
   },
 
-  // Module 5: Safeguarding
+  // Module 5: Safeguarding - Split into 4 questions
   {
     module_id: 5,
-    title: "Case 1 \u2013 Student Safety & Staff Conduct",
+    title: "Question 1 \u2013 Behaviours of Concern",
     scenario: `<p>Two students disclose to their teacher, that their friend, Kim, is being bullied by Beth, another student at the school, who is in the same year level. The teacher checks in on Kim who discloses the following information:</p>
 <ul>
 <li>Beth has been bullying her for some time and wants it to stop.</li>
@@ -121,13 +121,15 @@ export const caseStudies = [
 </ul>
 <p>The teacher tells Kim that Beth\u2019s behaviour is \u2018not ok\u2019 and that she has the right to say no. The teacher tells Kim to let her, or the Guidance Counsellor, know if she feels she can\u2019t handle the situation or has further worries. The teacher, believing Kim was not upset and seemed confident managing the situation, considered this to be early adolescent experimentation does not report the incident further.</p>
 <p>Over the few next few weeks, the teacher continues to check in with Kim via her personal social media account, sharing similar personal experiences when she was in school to reassure Kim. The teacher gives Kim her personal mobile number saying Kim can call or message her if she needs to talk or meet after hours. Kim\u2019s parents eventually learn about the incidents, arrange a meeting with the principal asking why the school did not inform them of the bullying. They also raised concerns about the teacher\u2019s and volunteer\u2019s handling of the situation and ask the principal what actions will be taken to ensure Kim\u2019s safety.</p>`,
-    questions: `<div class="space-y-4">
-<div>
-<p class="font-semibold">Question 1: What are the alleged behaviours of concern presented in this scenario?</p>
-<p>Identify and describe the specific behaviours that are causing concern.</p>
-</div>
-<div>
-<p class="font-semibold">Question 2: What steps would you take to address this situation?</p>
+    questions: `<p><strong>What are the alleged behaviours of concern presented in this scenario?</strong></p>
+<p>Identify and describe the specific behaviours that are causing concern.</p>`,
+    sort_order: 1,
+  },
+  {
+    module_id: 5,
+    title: "Question 2 \u2013 Steps to Address",
+    scenario: `<p><em>Refer to the scenario described in Question 1.</em></p>`,
+    questions: `<p><strong>What steps would you take to address this situation?</strong></p>
 <p>Outline the steps you would take to address this situation, including but not limited to:</p>
 <ul>
 <li>Reporting the incidents to the appropriate authorities and BCE staff.</li>
@@ -135,20 +137,26 @@ export const caseStudies = [
 <li>Implementing risk mitigation strategies to ensure the safety of all students.</li>
 <li>Providing support to the affected students and their families.</li>
 <li>Providing support to staff and volunteers involved.</li>
-</ul>
-</div>
-<div>
-<p class="font-semibold">Question 3: What are the key risks that need mitigating in this scenario?</p>
+</ul>`,
+    sort_order: 2,
+  },
+  {
+    module_id: 5,
+    title: "Question 3 \u2013 Key Risks",
+    scenario: `<p><em>Refer to the scenario described in Question 1.</em></p>`,
+    questions: `<p><strong>What are the key risks that need mitigating in this scenario?</strong></p>
 <p>Consider the potential risks to the affected students\u2019, the parents of the affected students, other students in the school, staff and volunteer involved, school\u2019s reputation, and any legal or compliance issues.</p>
-<p>Identify the risk/s, consequences of the risk and degree of seriousness/impact and your strategy to mitigate/reduce the risk.</p>
-</div>
-<div>
-<p class="font-semibold">Question 4: Who would you collaborate or work with to address this situation?</p>
+<p>Identify the risk/s, consequences of the risk and degree of seriousness/impact and your strategy to mitigate/reduce the risk.</p>`,
+    sort_order: 3,
+  },
+  {
+    module_id: 5,
+    title: "Question 4 \u2013 Collaboration",
+    scenario: `<p><em>Refer to the scenario described in Question 1.</em></p>`,
+    questions: `<p><strong>Who would you collaborate or work with to address this situation?</strong></p>
 <p>Identify the key stakeholders and professionals you would involve, such as parents, school counsellors, external agencies.</p>
-<p>Explain the roles each would play to respond to this situation.</p>
-</div>
-</div>`,
-    sort_order: 1,
+<p>Explain the roles each would play to respond to this situation.</p>`,
+    sort_order: 4,
   },
 
   // Module 6: WHS & People Management

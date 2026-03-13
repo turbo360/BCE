@@ -11,10 +11,11 @@ export default function ResponseEditor({
 }) {
   const [content, setContent] = useState(initialContent);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [showSaveModal, setShowSaveModal] = useState(false);
   const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const save = useCallback(async (text: string) => {
+  const save = useCallback(async (text: string, showModal = false) => {
     setSaveStatus("saving");
     try {
       const res = await fetch("/api/responses", {
@@ -24,6 +25,10 @@ export default function ResponseEditor({
       });
       if (res.ok) {
         setSaveStatus("saved");
+        if (showModal) {
+          setShowSaveModal(true);
+          setTimeout(() => setShowSaveModal(false), 2000);
+        }
       } else {
         setSaveStatus("error");
       }
@@ -62,35 +67,47 @@ export default function ResponseEditor({
         <p className="text-xs text-bce-slate">
           Write your response below. Your work is auto-saved as you type.
         </p>
-        <div className="flex items-center gap-2">
-          <span className={`text-xs font-medium ${
-            saveStatus === "saving" ? "text-amber-500" :
-            saveStatus === "saved" ? "text-green-600" :
-            saveStatus === "error" ? "text-red-500" :
-            "text-gray-400"
-          }`}>
-            {saveStatus === "saving" && "Saving..."}
-            {saveStatus === "saved" && "Saved"}
-            {saveStatus === "error" && "Save failed"}
-            {saveStatus === "idle" && ""}
-          </span>
-        </div>
+        <span className={`text-xs font-medium ${
+          saveStatus === "saving" ? "text-amber-500" :
+          saveStatus === "saved" ? "text-bce-green" :
+          saveStatus === "error" ? "text-bce-red" :
+          "text-gray-400"
+        }`}>
+          {saveStatus === "saving" && "Saving..."}
+          {saveStatus === "saved" && "Saved"}
+          {saveStatus === "error" && "Save failed"}
+        </span>
       </div>
       <textarea
         ref={textareaRef}
         value={content}
         onChange={handleChange}
         placeholder="Type your response here..."
-        className="w-full min-h-[300px] p-4 border border-gray-200 rounded-lg text-sm text-bce-slate leading-relaxed focus:ring-2 focus:ring-bce-gold focus:border-transparent outline-none resize-y"
+        className="w-full min-h-[300px] p-4 border border-gray-200 rounded-lg text-sm text-bce-slate leading-relaxed focus:ring-2 focus:ring-bce-light-blue focus:border-transparent outline-none resize-y"
       />
       <div className="flex justify-end mt-3">
         <button
-          onClick={() => save(content)}
+          onClick={() => save(content, true)}
           className="bg-bce-navy text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-bce-navy-dark transition-colors"
         >
           Save Response
         </button>
       </div>
+
+      {/* Save confirmation modal */}
+      {showSaveModal && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl p-8 max-w-sm w-full text-center animate-in">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-bce-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-bold text-bce-navy-dark mb-1">Response Saved</h3>
+            <p className="text-sm text-bce-slate">Your response has been saved successfully.</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

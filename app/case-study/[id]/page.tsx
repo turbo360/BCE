@@ -19,7 +19,6 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
   const user = db.prepare("SELECT submitted_at FROM users WHERE id = ?").get(session.userId) as { submitted_at: string | null };
   const existingResponse = db.prepare("SELECT content FROM responses WHERE user_id = ? AND case_study_id = ?").get(session.userId, caseStudy.id) as Pick<Response, "content"> | undefined;
 
-  // Get all cases in same module for navigation
   const moduleCases = db.prepare("SELECT id, title, sort_order FROM case_studies WHERE module_id = ? ORDER BY sort_order").all(caseStudy.module_id) as Pick<CaseStudy, "id" | "title" | "sort_order">[];
   const allCases = db.prepare("SELECT id FROM case_studies ORDER BY module_id, sort_order").all() as Pick<CaseStudy, "id">[];
   const currentIndex = allCases.findIndex((c) => c.id === caseStudy.id);
@@ -39,7 +38,7 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
           <span className="text-gray-300">/</span>
           <span className="text-bce-slate">{mod.title}</span>
           <span className="text-gray-300">/</span>
-          <span className="text-bce-navy-dark font-medium">{caseStudy.title}</span>
+          <span className="text-bce-navy-dark font-semibold">{caseStudy.title}</span>
         </div>
 
         {/* Module case study nav pills */}
@@ -48,7 +47,7 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
             <Link
               key={mc.id}
               href={`/case-study/${mc.id}`}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
                 mc.id === caseStudy.id
                   ? "bg-bce-navy text-white"
                   : "bg-white text-bce-slate hover:bg-gray-100 border border-gray-200"
@@ -63,32 +62,34 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
           {/* Scenario panel */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="bg-bce-navy-dark px-6 py-4">
-              <h1 className="text-white font-bold">{caseStudy.title}</h1>
+              <h1 className="text-white font-bold text-lg">{caseStudy.title}</h1>
               <p className="text-bce-light-blue text-xs mt-0.5">{mod.title}</p>
             </div>
             <div className="p-6">
-              <h3 className="text-xs font-bold text-bce-navy uppercase tracking-wider mb-3">Scenario</h3>
+              <h3 className="text-xs font-bold text-bce-navy uppercase tracking-wider mb-4">Scenario</h3>
               <div
-                className="text-sm text-bce-slate leading-relaxed scenario-content"
+                className="text-[15px] text-bce-slate leading-relaxed scenario-content"
                 dangerouslySetInnerHTML={{ __html: caseStudy.scenario }}
               />
-
-              <div className="mt-6 pt-6 border-t border-gray-100">
-                <h3 className="text-xs font-bold text-bce-navy uppercase tracking-wider mb-3">Questions</h3>
-                <div
-                  className="text-sm text-bce-navy-dark font-medium leading-relaxed scenario-content"
-                  dangerouslySetInnerHTML={{ __html: caseStudy.questions }}
-                />
-              </div>
             </div>
           </div>
 
-          {/* Response panel */}
+          {/* Questions + Response panel */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="bg-bce-navy px-6 py-4">
-              <h2 className="text-white font-bold text-sm">Your Response</h2>
+              <h2 className="text-white font-bold text-sm">Question & Response</h2>
             </div>
             <div className="p-6">
+              {/* Question displayed above the response area */}
+              <div className="mb-6 pb-6 border-b border-gray-100">
+                <h3 className="text-xs font-bold text-bce-navy uppercase tracking-wider mb-3">Question</h3>
+                <div
+                  className="text-[15px] text-bce-navy-dark font-medium leading-relaxed scenario-content"
+                  dangerouslySetInnerHTML={{ __html: caseStudy.questions }}
+                />
+              </div>
+
+              {/* Response area */}
               {isSubmitted ? (
                 <div>
                   <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3 mb-4">
@@ -97,7 +98,7 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
                     </p>
                   </div>
                   <div
-                    className="prose-response text-sm text-bce-slate whitespace-pre-wrap"
+                    className="prose-response text-[15px] text-bce-slate whitespace-pre-wrap"
                     dangerouslySetInnerHTML={{ __html: existingResponse?.content || "<p>No response provided.</p>" }}
                   />
                 </div>
@@ -116,12 +117,12 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
           {prevCase ? (
             <Link
               href={`/case-study/${prevCase.id}`}
-              className="flex items-center gap-2 text-sm font-medium text-bce-navy hover:text-bce-light-blue transition-colors"
+              className="flex items-center gap-2 text-sm font-semibold text-bce-navy hover:text-bce-light-blue transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
               </svg>
-              Previous Case Study
+              Previous
             </Link>
           ) : (
             <div />
@@ -135,9 +136,9 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
           {nextCase ? (
             <Link
               href={`/case-study/${nextCase.id}`}
-              className="flex items-center gap-2 text-sm font-medium text-bce-navy hover:text-bce-light-blue transition-colors"
+              className="flex items-center gap-2 text-sm font-semibold text-bce-navy hover:text-bce-light-blue transition-colors"
             >
-              Next Case Study
+              Next
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
               </svg>
