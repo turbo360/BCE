@@ -14,7 +14,8 @@ export default async function Dashboard() {
   const db = getDb();
   const user = db.prepare("SELECT * FROM users WHERE id = ?").get(session.userId) as {
     id: number; first_name: string; last_name: string; email: string; cohort: string; submitted_at: string | null; created_at: string;
-  };
+  } | undefined;
+  if (!user) redirect("/");
   const allModules = db.prepare("SELECT * FROM modules ORDER BY id").all() as Module[];
   const allCases = db.prepare("SELECT * FROM case_studies ORDER BY module_id, sort_order").all() as CaseStudy[];
   const userResponses = db.prepare("SELECT case_study_id, content FROM responses WHERE user_id = ?").all(session.userId) as Pick<Response, "case_study_id" | "content">[];
