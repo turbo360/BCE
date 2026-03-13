@@ -215,24 +215,30 @@ export function generateSubmissionPdf(
     for (let i = 0; i < pages.count; i++) {
       doc.switchToPage(i);
 
-      // Footer divider line
-      doc.rect(LEFT, doc.page.height - 56, pageWidth, 0.5).fill(LIGHT_GREY);
+      // Temporarily remove bottom margin so we can draw in the footer area
+      const savedMargin = doc.page.margins.bottom;
+      doc.page.margins.bottom = 0;
 
-      // Page info
+      const footerTop = doc.page.height - 52;
+
+      // Footer divider line
+      doc.rect(LEFT, footerTop, pageWidth, 0.5).fill(LIGHT_GREY);
+
+      // Page info - left
       doc.fontSize(7).fillColor(MUTED);
       doc.text(
         `BCE Professional Practices \u2013 ${user.first_name} ${user.last_name}`,
         LEFT,
-        doc.page.height - 44,
-        { width: pageWidth / 2, align: "left" }
+        footerTop + 8,
+        { width: pageWidth / 2, align: "left", lineBreak: false }
       );
 
-      // Page number
+      // Page number - right
       doc.text(
         `Page ${i + 1} of ${pages.count}`,
         LEFT + pageWidth / 2,
-        doc.page.height - 44,
-        { width: pageWidth / 2, align: "right" }
+        footerTop + 8,
+        { width: pageWidth / 2, align: "right", lineBreak: false }
       );
 
       // Turbo 360 credit
@@ -240,9 +246,12 @@ export function generateSubmissionPdf(
       doc.text(
         "Portal developed by Turbo 360 \u2013 turbo.net.au",
         LEFT,
-        doc.page.height - 32,
-        { width: pageWidth, align: "center" }
+        footerTop + 22,
+        { width: pageWidth, align: "center", lineBreak: false }
       );
+
+      // Restore margin
+      doc.page.margins.bottom = savedMargin;
     }
 
     doc.end();
