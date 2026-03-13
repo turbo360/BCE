@@ -185,23 +185,33 @@ export function generateSubmissionPdf(
         doc.fontSize(9).fillColor(BCE_NAVY_DARK).text(stripHtml(cs.questions), LEFT, doc.y, { width: pageWidth, lineGap: 2 });
         doc.moveDown(0.8);
 
-        // Response with subtle background
+        // Response
         doc.fontSize(7.5).fillColor(BCE_LIGHT_BLUE).text("RESPONSE", LEFT, doc.y);
         doc.moveDown(0.3);
 
         const responseContent = responseMap.get(cs.id);
-        const responseY = doc.y;
 
         if (responseContent && responseContent.trim()) {
-          // Measure text height first
-          doc.fontSize(9);
-          const textHeight = doc.heightOfString(responseContent.trim(), { width: pageWidth - 20 });
-          // Light response background
-          doc.rect(LEFT, responseY - 4, pageWidth, textHeight + 16).fill("#F8FAFC");
-          doc.fontSize(9).fillColor("#1A202C").text(responseContent.trim(), LEFT + 10, responseY + 4, { width: pageWidth - 20, lineGap: 2 });
+          // Split into paragraphs (double line breaks) and render with spacing
+          const paragraphs = responseContent.trim().split(/\n\s*\n/);
+          doc.fontSize(9).fillColor("#1A202C");
+          for (let p = 0; p < paragraphs.length; p++) {
+            const para = paragraphs[p].trim();
+            if (!para) continue;
+
+            // Check if we need a new page
+            const paraHeight = doc.heightOfString(para, { width: pageWidth, lineGap: 2 });
+            if (doc.y + paraHeight > doc.page.height - 80) {
+              doc.addPage();
+            }
+
+            doc.text(para, LEFT, doc.y, { width: pageWidth, lineGap: 2 });
+            if (p < paragraphs.length - 1) {
+              doc.moveDown(0.6);
+            }
+          }
         } else {
-          doc.rect(LEFT, responseY - 4, pageWidth, 24).fill("#F8FAFC");
-          doc.fontSize(9).fillColor(MUTED).text("No response provided.", LEFT + 10, responseY + 4, { width: pageWidth - 20 });
+          doc.fontSize(9).fillColor(MUTED).text("No response provided.", LEFT, doc.y, { width: pageWidth });
         }
 
         doc.moveDown(1.2);

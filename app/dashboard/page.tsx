@@ -27,22 +27,30 @@ export default async function Dashboard() {
 
   return (
     <div className="bg-bce-cream min-h-[calc(100vh-4rem)]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        {/* User bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-bce-navy-dark">Case Studies Dashboard</h1>
-            <p className="text-sm text-bce-slate mt-1">
-              {user.first_name} {user.last_name} &middot; {user.cohort}
-            </p>
+      {/* Dashboard header with gradient */}
+      <div className="bg-gradient-to-r from-bce-navy-dark via-bce-navy to-bce-light-blue">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-bold text-white">Case Studies Dashboard</h1>
+              <p className="text-sm text-white/70 mt-1">
+                {user.first_name} {user.last_name} &middot; {user.cohort}
+              </p>
+              <p className="text-xs text-white/50 mt-1">
+                Modules 2–6 <span className="italic">(there are no case studies for Module 1)</span>
+              </p>
+            </div>
+            {user.submitted_at && (
+              <span className="inline-flex items-center gap-1.5 bg-white/20 text-white px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-sm">
+                <span className="w-2 h-2 bg-bce-green rounded-full"></span>
+                Submitted
+              </span>
+            )}
           </div>
-          {user.submitted_at && (
-            <span className="inline-flex items-center gap-1.5 bg-green-100 text-green-800 px-3 py-1.5 rounded-full text-xs font-semibold">
-              <span className="w-2 h-2 bg-bce-green rounded-full"></span>
-              Submitted
-            </span>
-          )}
         </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
 
         {/* Progress bar */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
