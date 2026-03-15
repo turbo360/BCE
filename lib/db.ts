@@ -57,24 +57,24 @@ export function getDb(): Database.Database {
     );
   `);
 
-  // Seed modules if empty
-  const moduleCount = db.prepare("SELECT COUNT(*) as count FROM modules").get() as { count: number };
-  if (moduleCount.count === 0) {
-    const insertModule = db.prepare("INSERT INTO modules (id, title, description) VALUES (?, ?, ?)");
-    for (const m of modules) {
-      insertModule.run(m.id, m.title, m.description);
-    }
+  // Upsert modules from seed data (preserves user data, updates content)
+  const upsertModule = db.prepare(
+    "INSERT INTO modules (id, title, description) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET title = excluded.title, description = excluded.description"
+  );
+  for (const m of modules) {
+    upsertModule.run(m.id, m.title, m.description);
   }
 
-  // Seed case studies if empty
-  const caseCount = db.prepare("SELECT COUNT(*) as count FROM case_studies").get() as { count: number };
-  if (caseCount.count === 0) {
-    const insertCase = db.prepare(
-      "INSERT INTO case_studies (module_id, title, scenario, questions, sort_order) VALUES (?, ?, ?, ?, ?)"
-    );
-    for (const c of caseStudies) {
-      insertCase.run(c.module_id, c.title, c.scenario, c.questions, c.sort_order);
-    }
+  // Upsert case studies from seed data (preserves responses, updates content)
+  const upsertCase = db.prepare(
+    `INSERT INTO case_studies (id, module_id, title, scenario, questions, sort_order)
+     VALUES (?, ?, ?, ?, ?, ?)
+     ON CONFLICT(id) DO UPDATE SET title = excluded.title, scenario = excluded.scenario, questions = excluded.questions, sort_order = excluded.sort_order`
+  );
+  // Assign stable IDs based on position so upsert works consistently
+  let caseId = 1;
+  for (const c of caseStudies) {
+    upsertCase.run(caseId++, c.module_id, c.title, c.scenario, c.questions, c.sort_order);
   }
 
   return db;
