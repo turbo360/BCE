@@ -37,6 +37,20 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
   const currentModuleIndex = moduleCases.findIndex((mc) => mc.id === caseStudy.id);
   const nextModuleCase = currentModuleIndex < moduleCases.length - 1 ? moduleCases[currentModuleIndex + 1] : null;
 
+  // Find first case study of next module for "Next Module" button
+  let nextModuleFirstCase: { id: number } | null = null;
+  let nextModuleTitle: string | null = null;
+  if (!nextModuleCase) {
+    const nextMod = db.prepare("SELECT * FROM modules WHERE id > ? ORDER BY id LIMIT 1").get(caseStudy.module_id) as Module | undefined;
+    if (nextMod) {
+      const firstCase = db.prepare("SELECT id FROM case_studies WHERE module_id = ? ORDER BY sort_order LIMIT 1").get(nextMod.id) as { id: number } | undefined;
+      if (firstCase) {
+        nextModuleFirstCase = firstCase;
+        nextModuleTitle = nextMod.title.replace("Module ", "M");
+      }
+    }
+  }
+
   const isSubmitted = !!user.submitted_at;
 
   return (
@@ -119,6 +133,8 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
                   caseStudyId={caseStudy.id}
                   initialContent={existingResponse?.content || ""}
                   nextQuestionHref={nextModuleCase ? `/case-study/${nextModuleCase.id}` : undefined}
+                  nextModuleHref={nextModuleFirstCase ? `/case-study/${nextModuleFirstCase.id}` : undefined}
+                  nextModuleTitle={nextModuleTitle || undefined}
                 />
               )}
             </div>

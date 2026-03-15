@@ -7,10 +7,14 @@ export default function ResponseEditor({
   caseStudyId,
   initialContent,
   nextQuestionHref,
+  nextModuleHref,
+  nextModuleTitle,
 }: {
   caseStudyId: number;
   initialContent: string;
   nextQuestionHref?: string;
+  nextModuleHref?: string;
+  nextModuleTitle?: string;
 }) {
   const router = useRouter();
   const [content, setContent] = useState(initialContent);
@@ -105,6 +109,20 @@ export default function ResponseEditor({
             className="bg-bce-light-blue text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-bce-navy transition-colors flex items-center gap-2"
           >
             Next Question
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        )}
+        {!nextQuestionHref && nextModuleHref && (
+          <button
+            onClick={async () => {
+              await save(content);
+              router.push(nextModuleHref);
+            }}
+            className="bg-bce-light-blue text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-bce-navy transition-colors flex items-center gap-2"
+          >
+            Next Module{nextModuleTitle ? `: ${nextModuleTitle}` : ""}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
             </svg>
