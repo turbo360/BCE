@@ -1,21 +1,21 @@
 export const modules = [
   {
     id: 2,
-    title: "Module 2: Governance",
+    title: "Module 2: Risk Management",
     description:
       "This module provides detail around good governance within BCE to ensure effective and transparent processes for decision making. It ensures BCE is accountable in meeting civil, legal, and canonical obligations. BCE is guided by principles of governance including accountable and responsible administration, robust risk management, and ethical standards and values.",
   },
   {
     id: 3,
-    title: "Module 3: Financial Management",
+    title: "Module 3: Financial Stewardship",
     description:
       "This module details regulatory requirements to ensure financial viability and government funding eligibility of BCE as the governing body and its 146 schools. Good financial governance within BCE provides for oversight of school budgets and financial plans, ensuring contracts and arrangements are at arms-length, and ensuring robust financial management procedures including delegations and approvals.",
   },
   {
     id: 4,
-    title: "Module 4: Education Program",
+    title: "Module 4: Education Accreditation",
     description:
-      "This module provides detail around NSSAB accreditation requirements to provide educational programs that promote continuity in learning experiences, provides learning appropriate to student\u2019s phases of development, and is responsive to student needs. BCE is also required to provide an education program consistent with the Australian curriculum and Alice Springs (Mparntwe) Education Declaration.",
+      "This module provides detail around NSSAB accreditation requirements to provide educational programs that promote continuity in learning experiences, provides learning appropriate to student\u2019s phases of development, and is responsive to student needs. BCE is also required to provide an education program consistent with the Australian curriculum and Alice Springs (Mparntwe) Education Declaration. All of these requirements can be found in the BCE Curriculum Compass.",
   },
   {
     id: 5,
@@ -25,14 +25,14 @@ export const modules = [
   },
   {
     id: 6,
-    title: "Module 6: WHS & People Management",
+    title: "Module 6: People and Safety",
     description:
       "This module details the regulatory requirements in relation to work health and safety and the employee lifecycle. BCE takes a strategic approach to effective work health and safety and people management applying legislative requirements and ethical principles. The employee lifecycle includes attraction, selection, appointment, health and wellbeing, performance and development, and separation.",
   },
 ];
 
 export const caseStudies = [
-  // Module 2: Governance
+  // Module 2: Risk Management
   {
     module_id: 2,
     title: "Case 1 \u2013 Student Attendance & Risk",
@@ -41,7 +41,7 @@ export const caseStudies = [
     sort_order: 1,
   },
 
-  // Module 3: Financial Management
+  // Module 3: Financial Stewardship
   {
     module_id: 3,
     title: "Case 1 \u2013 Parish Hall Arrangement",
@@ -64,7 +64,7 @@ export const caseStudies = [
     sort_order: 3,
   },
 
-  // Module 4: Education Program
+  // Module 4: Education Accreditation
   {
     module_id: 4,
     title: "Case 1 \u2013 Curriculum Planning",
@@ -159,7 +159,7 @@ export const caseStudies = [
     sort_order: 4,
   },
 
-  // Module 6: WHS & People Management
+  // Module 6: People and Safety
   {
     module_id: 6,
     title: "Case 1 \u2013 Contractor Safety",
