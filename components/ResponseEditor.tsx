@@ -9,17 +9,23 @@ export default function ResponseEditor({
   nextQuestionHref,
   nextModuleHref,
   nextModuleTitle,
+  showSubmit,
+  allComplete,
 }: {
   caseStudyId: number;
   initialContent: string;
   nextQuestionHref?: string;
   nextModuleHref?: string;
   nextModuleTitle?: string;
+  showSubmit?: boolean;
+  allComplete?: boolean;
 }) {
   const router = useRouter();
   const [content, setContent] = useState(initialContent);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -128,7 +134,58 @@ export default function ResponseEditor({
             </svg>
           </button>
         )}
+        {showSubmit && (
+          <button
+            onClick={async () => {
+              await save(content);
+              setShowSubmitConfirm(true);
+            }}
+            disabled={!allComplete}
+            className="bg-bce-green text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-green-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            Submit All Responses
+          </button>
+        )}
       </div>
+
+      {/* Submit confirmation modal */}
+      {showSubmitConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
+            <h3 className="text-lg font-bold text-bce-navy mb-2">Confirm Submission</h3>
+            <p className="text-sm text-bce-slate mb-6">
+              Once submitted, your responses will be locked and cannot be edited. Are you sure you want to submit?
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowSubmitConfirm(false)}
+                className="px-4 py-2 text-sm font-medium text-bce-slate hover:text-bce-navy transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={async () => {
+                  setSubmitting(true);
+                  try {
+                    const res = await fetch("/api/responses/submit", { method: "POST" });
+                    if (res.ok) {
+                      router.push("/dashboard");
+                      router.refresh();
+                    }
+                  } finally {
+                    setSubmitting(false);
+                    setShowSubmitConfirm(false);
+                  }
+                }}
+                disabled={submitting}
+                className="bg-bce-green text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-green-700 transition-colors disabled:opacity-50"
+              >
+                {submitting ? "Submitting..." : "Yes, Submit"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Save confirmation modal */}
       {showSaveModal && (

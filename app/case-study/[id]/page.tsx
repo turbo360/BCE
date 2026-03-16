@@ -51,6 +51,15 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
     }
   }
 
+  // Check if this is the very last case study (end of M6) and if all responses are complete
+  const isLastCaseStudy = !nextModuleCase && !nextModuleFirstCase;
+  let allComplete = false;
+  if (isLastCaseStudy) {
+    const totalCases = allCases.length;
+    const completedCount = (db.prepare("SELECT COUNT(*) as count FROM responses WHERE user_id = ? AND content != '' AND content IS NOT NULL").get(session.userId) as { count: number }).count;
+    allComplete = completedCount >= totalCases;
+  }
+
   const isSubmitted = !!user.submitted_at;
 
   return (
@@ -135,6 +144,8 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
                   nextQuestionHref={nextModuleCase ? `/case-study/${nextModuleCase.id}` : undefined}
                   nextModuleHref={nextModuleFirstCase ? `/case-study/${nextModuleFirstCase.id}` : undefined}
                   nextModuleTitle={nextModuleTitle || undefined}
+                  showSubmit={isLastCaseStudy}
+                  allComplete={allComplete}
                 />
               )}
             </div>
