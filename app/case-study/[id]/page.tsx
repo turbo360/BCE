@@ -3,6 +3,7 @@ import { getDb } from "@/lib/db";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import ResponseEditor from "@/components/ResponseEditor";
+import CaseStudyBottomNav from "@/components/CaseStudyBottomNav";
 import type { CaseStudy, Module, Response } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -153,40 +154,12 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
         </div>
 
         {/* Navigation */}
-        <div className="flex items-center justify-between mt-8">
-          {prevCase ? (
-            <Link
-              href={`/case-study/${prevCase.id}`}
-              className="flex items-center gap-2 text-sm font-semibold text-bce-navy hover:text-bce-light-blue transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-              </svg>
-              Previous
-            </Link>
-          ) : (
-            <div />
-          )}
-          <Link
-            href="/dashboard"
-            className="text-sm font-medium text-bce-slate hover:text-bce-navy transition-colors"
-          >
-            Back to Dashboard
-          </Link>
-          {nextCase ? (
-            <Link
-              href={`/case-study/${nextCase.id}`}
-              className="flex items-center gap-2 text-sm font-semibold text-bce-navy hover:text-bce-light-blue transition-colors"
-            >
-              Next
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          ) : (
-            <div />
-          )}
-        </div>
+        <CaseStudyBottomNav
+          caseStudyId={caseStudy.id}
+          prevHref={prevCase ? `/case-study/${prevCase.id}` : null}
+          nextHref={nextCase ? `/case-study/${nextCase.id}` : null}
+          isSubmitted={isSubmitted}
+        />
       </div>
     </div>
   );

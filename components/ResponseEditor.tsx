@@ -94,6 +94,7 @@ export default function ResponseEditor({
       </div>
       <textarea
         ref={textareaRef}
+        data-response-editor
         value={content}
         onChange={handleChange}
         placeholder="Type your response here..."
