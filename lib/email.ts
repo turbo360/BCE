@@ -19,7 +19,7 @@ interface SendSubmissionEmailParams {
   userEmail: string;
   cohort: string;
   submittedAt: string;
-  pdfBuffer: Buffer;
+  docxBuffer: Buffer;
 }
 
 export async function sendSubmissionEmail({
@@ -28,7 +28,7 @@ export async function sendSubmissionEmail({
   userEmail,
   cohort,
   submittedAt,
-  pdfBuffer,
+  docxBuffer,
 }: SendSubmissionEmailParams): Promise<boolean> {
   const client = getClient();
   if (!client) return false;
@@ -61,7 +61,7 @@ export async function sendSubmissionEmail({
     await client.sendEmail({
       From: FROM_EMAIL,
       To: toAddresses,
-      Subject: `BCE Case Study Submission – ${userName} (${cohort})`,
+      Subject: `BCE Case Study Submission – ${userName} (Syndicate #${cohort})`,
       HtmlBody: `
 <!DOCTYPE html>
 <html>
@@ -115,7 +115,7 @@ export async function sendSubmissionEmail({
                         <td style="padding: 0 0 14px 0; color: #02273C; font-size: 14px;">${userEmail}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 4px 0; color: #718096; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Cohort</td>
+                        <td style="padding: 4px 0; color: #718096; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Syndicate #</td>
                       </tr>
                       <tr>
                         <td style="padding: 0 0 14px 0; color: #02273C; font-size: 14px;">${cohort}</td>
@@ -132,7 +132,7 @@ export async function sendSubmissionEmail({
               </table>
 
               <p style="color: #4A5568; font-size: 14px; line-height: 1.6; margin: 24px 0 0 0;">
-                The full responses are attached as a PDF document.
+                The full responses are attached as a Word document.
               </p>
             </td>
           </tr>
@@ -156,12 +156,12 @@ export async function sendSubmissionEmail({
 </body>
 </html>
       `,
-      TextBody: `BCE Case Study Submission\n\nParticipant: ${userName}\nEmail: ${userEmail}\nCohort: ${cohort}\nSubmitted: ${submittedDate}\n\nThe full responses are attached as a PDF document.\n\nPowered by Turbo 360 - turbo.net.au`,
+      TextBody: `BCE Case Study Submission\n\nParticipant: ${userName}\nEmail: ${userEmail}\nSyndicate #: ${cohort}\nSubmitted: ${submittedDate}\n\nThe full responses are attached as a Word document.\n\nPowered by Turbo 360 - turbo.net.au`,
       Attachments: [
         {
-          Name: `BCE-Responses-${userName.replace(/\s+/g, "-")}.pdf`,
-          Content: pdfBuffer.toString("base64"),
-          ContentType: "application/pdf",
+          Name: `BCE-Responses-${userName.replace(/\s+/g, "-")}.docx`,
+          Content: docxBuffer.toString("base64"),
+          ContentType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
           ContentID: "",
         },
         ...(logoBase64

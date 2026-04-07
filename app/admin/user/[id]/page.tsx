@@ -39,7 +39,7 @@ export default async function AdminUserPage({ params }: { params: { id: string }
               <div className="text-sm font-medium text-bce-navy">{user.email}</div>
             </div>
             <div>
-              <div className="text-xs text-bce-slate uppercase tracking-wider mb-1">Cohort</div>
+              <div className="text-xs text-bce-slate uppercase tracking-wider mb-1">Syndicate #</div>
               <div className="text-sm font-medium text-bce-navy">{user.cohort}</div>
             </div>
             <div>

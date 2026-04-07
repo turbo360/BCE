@@ -119,7 +119,7 @@ export default function AuthForms() {
           {mode === "register" && (
             <div>
               <label htmlFor="cohort" className="block text-sm font-medium text-bce-navy-dark mb-1">
-                Cohort Name
+                Syndicate Number
               </label>
               <input
                 id="cohort"
@@ -127,7 +127,7 @@ export default function AuthForms() {
                 required
                 value={cohort}
                 onChange={(e) => setCohort(e.target.value)}
-                placeholder="e.g. Cohort 1 - March 2025"
+                placeholder="e.g. 5"
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-bce-light-blue focus:border-transparent outline-none text-sm"
               />
             </div>

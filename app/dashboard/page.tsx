@@ -34,7 +34,7 @@ export default async function Dashboard() {
             <div>
               <h1 className="text-2xl font-bold text-white">Case Studies Dashboard</h1>
               <p className="text-sm text-white/70 mt-1">
-                {user.first_name} {user.last_name} &middot; {user.cohort}
+                {user.first_name} {user.last_name} &middot; Syndicate #{user.cohort}
               </p>
               <p className="text-xs text-white/50 mt-1">
                 Modules 2–6 <span className="italic">(there are no case studies for Module 1)</span>
@@ -149,9 +149,9 @@ export default async function Dashboard() {
             <p className="text-sm text-bce-slate mb-4">
               {allComplete
                 ? "All case studies are complete. You can now submit your responses."
-                : `Complete all ${totalCases} case studies before submitting. ${totalCases - completedCases} remaining.`}
+                : `You have completed ${completedCases} of ${totalCases} case studies. You can submit now — unanswered case studies will be recorded as blank.`}
             </p>
-            <SubmitButton disabled={!allComplete} />
+            <SubmitButton disabled={false} incomplete={!allComplete} remaining={totalCases - completedCases} />
           </div>
         )}
       </div>

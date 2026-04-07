@@ -30,10 +30,10 @@ export default function AdminUserActions({ userId }: { userId: number }) {
 
   return (
     <div className="flex items-center gap-2">
-      {/* Download PDF */}
+      {/* Download Word document */}
       <a
-        href={`/api/admin/user-pdf?userId=${userId}`}
-        title="Download PDF"
+        href={`/api/admin/user-docx?userId=${userId}`}
+        title="Download Word document"
         className="p-1.5 rounded-md text-bce-slate hover:text-bce-navy hover:bg-gray-100 transition-colors"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

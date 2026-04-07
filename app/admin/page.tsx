@@ -71,7 +71,7 @@ export default async function AdminPage() {
               <thead>
                 <tr className="bg-bce-navy text-white text-left text-xs uppercase tracking-wider">
                   <th className="px-6 py-3 font-semibold">Participant</th>
-                  <th className="px-6 py-3 font-semibold">Cohort</th>
+                  <th className="px-6 py-3 font-semibold">Syndicate #</th>
                   <th className="px-6 py-3 font-semibold">Progress</th>
                   <th className="px-6 py-3 font-semibold">Status</th>
                   <th className="px-6 py-3 font-semibold">Registered</th>

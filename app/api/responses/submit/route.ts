@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getDb } from "@/lib/db";
 import { getUserFromRequest } from "@/lib/auth";
-import { generateSubmissionPdf } from "@/lib/pdf";
+import { generateSubmissionDocx } from "@/lib/docx";
 import { sendSubmissionEmail } from "@/lib/email";
 import type { Module, CaseStudy } from "@/lib/types";
 
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       const responses = db.prepare("SELECT case_study_id, content FROM responses WHERE user_id = ?").all(session.userId) as { case_study_id: number; content: string }[];
       const recipients = db.prepare("SELECT email, name FROM notification_recipients").all() as { email: string; name: string }[];
 
-      const pdfBuffer = await generateSubmissionPdf(
+      const docxBuffer = await generateSubmissionDocx(
         { ...user, submitted_at: updatedUser.submitted_at },
         modules,
         caseStudies,
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
         userEmail: user.email,
         cohort: user.cohort,
         submittedAt: updatedUser.submitted_at,
-        pdfBuffer,
+        docxBuffer,
       });
     } catch (err) {
       console.error("Error generating/sending submission email:", err);

@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getDb } from "@/lib/db";
 import { isAdminRequest } from "@/lib/auth";
-import { generateSubmissionPdf } from "@/lib/pdf";
+import { generateSubmissionDocx } from "@/lib/docx";
 import { sendSubmissionEmail } from "@/lib/email";
 import type { Module, CaseStudy } from "@/lib/types";
 
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "No notification recipients configured" }, { status: 400 });
   }
 
-  const pdfBuffer = await generateSubmissionPdf(
+  const docxBuffer = await generateSubmissionDocx(
     { ...user, submitted_at: user.submitted_at },
     modules,
     caseStudies,
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     userEmail: user.email,
     cohort: user.cohort,
     submittedAt: user.submitted_at,
-    pdfBuffer,
+    docxBuffer,
   });
 
   if (!sent) {

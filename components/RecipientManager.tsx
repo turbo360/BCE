@@ -62,7 +62,7 @@ export default function RecipientManager() {
       <div className="bg-bce-navy px-6 py-4">
         <h2 className="text-white font-bold text-sm">Submission Notification Recipients</h2>
         <p className="text-bce-light-blue text-xs mt-0.5">
-          These email addresses receive a notification with PDF attachment when a participant submits.
+          These email addresses receive a notification with Word document attachment when a participant submits.
         </p>
       </div>
       <div className="p-6">

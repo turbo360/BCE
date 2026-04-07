@@ -140,8 +140,7 @@ export default function ResponseEditor({
               await save(content);
               setShowSubmitConfirm(true);
             }}
-            disabled={!allComplete}
-            className="bg-bce-green text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-green-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="bg-bce-green text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-green-700 transition-colors"
           >
             Submit All Responses
           </button>
@@ -153,6 +152,11 @@ export default function ResponseEditor({
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
             <h3 className="text-lg font-bold text-bce-navy mb-2">Confirm Submission</h3>
+            {allComplete === false && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-sm text-amber-900">
+                Some case studies are still unanswered. They will be recorded as blank in your submission.
+              </div>
+            )}
             <p className="text-sm text-bce-slate mb-6">
               Once submitted, your responses will be locked and cannot be edited. Are you sure you want to submit?
             </p>

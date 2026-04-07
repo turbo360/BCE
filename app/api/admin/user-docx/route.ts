@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getDb } from "@/lib/db";
 import { isAdminRequest } from "@/lib/auth";
-import { generateSubmissionPdf } from "@/lib/pdf";
+import { generateSubmissionDocx } from "@/lib/docx";
 import type { Module, CaseStudy } from "@/lib/types";
 
 export async function GET(request: NextRequest) {
@@ -23,18 +23,18 @@ export async function GET(request: NextRequest) {
   const caseStudies = db.prepare("SELECT * FROM case_studies ORDER BY module_id, sort_order").all() as CaseStudy[];
   const responses = db.prepare("SELECT case_study_id, content FROM responses WHERE user_id = ?").all(user.id) as { case_study_id: number; content: string }[];
 
-  const pdfBuffer = await generateSubmissionPdf(
+  const docxBuffer = await generateSubmissionDocx(
     { ...user, submitted_at: user.submitted_at },
     modules,
     caseStudies,
     responses
   );
 
-  const fileName = `BCE-Responses-${user.first_name}-${user.last_name}.pdf`.replace(/\s+/g, "-");
+  const fileName = `BCE-Responses-${user.first_name}-${user.last_name}.docx`.replace(/\s+/g, "-");
 
-  return new NextResponse(new Uint8Array(pdfBuffer), {
+  return new NextResponse(new Uint8Array(docxBuffer), {
     headers: {
-      "Content-Type": "application/pdf",
+      "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "Content-Disposition": `attachment; filename="${fileName}"`,
     },
   });
