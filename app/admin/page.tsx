@@ -126,7 +126,11 @@ export default async function AdminPage() {
                         >
                           View
                         </Link>
-                        {u.submitted_at && <AdminUserActions userId={u.id} />}
+                        <AdminUserActions
+                          userId={u.id}
+                          userName={`${u.first_name} ${u.last_name}`}
+                          hasSubmitted={!!u.submitted_at}
+                        />
                       </div>
                     </td>
                   </tr>
